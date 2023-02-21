@@ -1,66 +1,70 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.amazonaws</groupId>
-  <artifactId>elasticache-java-cluster-client</artifactId>
-  <version>1.2.2</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>6</source>
-                    <target>6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-  <name>ElastiCacheJavaClusterClient</name>
-  <description>Amazon ElastiCache Cluster Client is an enhanced Java library to connect to ElastiCache clusters. This client library has been built upon Spymemcached and is released under the Apache 2.0 License.</description>
-  <url>https://aws.amazon.com/documentation/elasticache/</url>
-   
+  <groupId>org.infinispan</groupId>
+  <artifactId>memcached-client</artifactId>
+  <version>1.2.2-SNAPSHOT</version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <name>Memcached Client</name>
+  <description>Memcached Client is an enhanced Java library to connect to Memcached clusters. This client library has been built upon Spymemcached and is released under the Apache 2.0 License.</description>
+  <url>https://github.com/infinispan/memcached-client</url>
   <dependencies>
     <!-- Optional Dependencies at Runtime -->
     <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-1.2-api</artifactId>
-        <version>2.13.3</version>
-        <optional>true</optional>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-1.2-api</artifactId>
+      <version>2.19.0</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.7.5</version>
-        <optional>true</optional>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.36</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-beans</artifactId>
-        <version>5.3.18</version>
-        <optional>true</optional>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>5.3.20</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
-        <groupId>com.codahale.metrics</groupId>
-        <artifactId>metrics-core</artifactId>
-        <version>3.0.1</version>
-        <optional>true</optional>
+      <groupId>com.codahale.metrics</groupId>
+      <artifactId>metrics-core</artifactId>
+      <version>3.0.1</version>
+      <optional>true</optional>
     </dependency>
- 
+
     <!-- Test Dependencies -->
     <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.13.1</version>
-        <scope>test</scope>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
-        <groupId>jmock</groupId>
-        <artifactId>jmock</artifactId>
-        <version>1.2.0</version>
-        <scope>test</scope>
+      <groupId>jmock</groupId>
+      <artifactId>jmock</artifactId>
+      <version>1.2.0</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
- 
+
   <licenses>
     <license>
       <name>Apache 2.0 License</name>
@@ -68,8 +72,8 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:git@github.com:amazonwebservices/aws-elasticache-cluster-client-memcached-for-java.git</connection>
-    <url>https://github.com/amazonwebservices/aws-elasticache-cluster-client-memcached-for-java.git</url>
+    <connection>scm:git:git@github.com:infinispan/memcached-client.git</connection>
+    <url>https://github.com/infinispan/memcached-client</url>
   </scm>
   <developers>
     <developer>
@@ -80,6 +84,118 @@
         <role>developer</role>
       </roles>
     </developer>
+    <developer>
+      <id>infinispan</id>
+      <organization>Infinispan</organization>
+      <organizationUrl>https://infinispan.org</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </developer>
   </developers>
- 
+  <profiles>
+    <profile>
+      <id>release</id>
+      <properties>
+        <!-- maven repository urls -->
+        <maven.releases.nexus.url>https://s01.oss.sonatype.org/</maven.releases.nexus.url>
+        <maven.releases.repo.id>ossrh</maven.releases.repo.id>
+        <maven.releases.repo.url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</maven.releases.repo.url>
+        <maven.snapshots.repo.id>ossrh</maven.snapshots.repo.id>
+        <maven.snapshots.repo.url>https://s01.oss.sonatype.org/content/repositories/snapshots</maven.snapshots.repo.url>
+      </properties>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>${maven.snapshots.repo.id}</id>
+          <url>${maven.snapshots.repo.url}</url>
+        </snapshotRepository>
+        <repository>
+          <id>${maven.releases.repo.id}</id>
+          <url>${maven.releases.repo.url}</url>
+        </repository>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.5.0</version>
+            <executions>
+              <execution>
+                <id>javadoc</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <source>8</source>
+              <doclint>none</doclint>
+              <detectLinks>false</detectLinks>
+              <detectOfflineLinks>false</detectOfflineLinks>
+              <links>
+                <link>http://docs.oracle.com/javase/8/docs/api/</link>
+              </links>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.13</version>
+            <extensions>true</extensions>
+            <configuration>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <stagingDescription>Memcached Client ${project.version} release</stagingDescription>
+              <nexusUrl>${maven.releases.nexus.url}</nexusUrl>
+              <serverId>${maven.releases.repo.id}</serverId>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.0.1</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <passphraseServerId>gpg.passphrase</passphraseServerId>
+                  <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-scm-plugin</artifactId>
+            <version>1.13.0</version>
+            <configuration>
+              <tag>${project.version}</tag>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

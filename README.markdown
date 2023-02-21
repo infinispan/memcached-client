@@ -1,12 +1,22 @@
-# Amazon ElastiCache Cluster Client
+# Memcached Cluster Client
 
-[![Build Status](https://travis-ci.org/awslabs/aws-elasticache-cluster-client-memcached-for-java.svg?branch=master)](https://travis-ci.org/awslabs/aws-elasticache-cluster-client-memcached-for-java)
+Memcached Cluster Client is an enhanced Java library to connect to ElastiCache clusters. This client library has been built upon Spymemcached and is released under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
 
-Amazon ElastiCache Cluster Client is an enhanced Java library to connect to ElastiCache clusters. This client library has been built upon Spymemcached and is released under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
+# Maven coordinates
+
+Artifacts published from this repository are available from Maven central using the following coordinates:
+
+```xml
+<dependency>
+  <groupId>org.infinispan</groupId>
+  <artifactId>memcached-client</artifactId>
+  <version>1.2.1-SNAPSHOT</version>
+</dependency>
+```
 
 # Building
 
-Amazon ElastiCache Cluster Client can be compiled using Apache Ant by running the following
+Memcached Cluster Client can be compiled using Apache Ant by running the following
 command:
 
     ant
@@ -16,10 +26,11 @@ directory of the project.
 
 # Configuring the client in TLS mode
 
-As memcached supports TLS since version 1.5.13, Amazon ElastiCache Cluster Client added TLS support for better security.
+As memcached supports TLS since version 1.5.13, Memcached Cluster Client added TLS support for better security.
 
 In order to create a client in TLS mode, do the following to initialize the client with the appropriate SSLContext:
 
+```java
     import java.security.cert.CertificateFactory;
     import java.security.KeyStore;
     import javax.net.ssl.SSLContext;
@@ -46,9 +57,11 @@ In order to create a client in TLS mode, do the following to initialize the clie
             client.set("theKey", 3600, "This is the data value");
         }
     }
+```
 
 To create the TLS mode client with customized TLS certificate, initialize the SSLContext as follows:
 
+```java
     InputStream inputStream = new FileInputStream("/tmp/my_certificate");
     KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
     ks.load(null);
@@ -57,12 +70,13 @@ To create the TLS mode client with customized TLS certificate, initialize the SS
     tmf.init(ks);
     SSLContext sslContext = SSLContext.getInstance("TLS");
     sslContext.init(null, tmf.getTrustManagers(), null);
+```
 
 The rest of the logic to create the client follows.
 
 # Testing
 
-The latest version of Amazon ElastiCache Cluster Client supports unit tests and integration tests.
+The latest version of Memcached Cluster Client supports unit tests and integration tests.
 
 ## Unit Tests
 Unit tests do not require any running memcached servers, and can be run using Apache Ant by the following command:
@@ -100,11 +114,10 @@ This argument is used to specify the type of your testing server. Supported opti
 This argument is used to specify the folder of the 2 certificates for starting memcached server with TLS enabled. Named those 2 certificates as _private.cert_ and _public.cert_. This is mandatory if you want to run integration tests with TLS mode.
 Besides, your testing server should be built with TLS capability. See instruction: https://github.com/memcached/memcached/wiki/TLS
 
-# More Information for Amazon ElastiCache Cluster Client
-Github link: https://github.com/amazonwebservices/aws-elasticache-cluster-client-memcached-for-java.
-This repository is a fork of the spymemcached Java client for connecting to memcached (specifically the https://github.com/dustin/java-memcached-client repo).
-
-Additional changes have been made to support Amazon ElastiCache Auto Discovery. To read more about Auto Discovery, please go here: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/AutoDiscovery.html.
+# More Information for Memcached Cluster Client
+Github link: https://github.com/infinispan/memcached-client.
+This repository is a fork of the spymemcached Java client for connecting to memcached (specifically the https://github.com/dustin/java-memcached-client repo),
+including the changes added by AWS to support Memcached Auto Discovery. To read more about Auto Discovery, please go here: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/AutoDiscovery.html.
 
 For more information about Spymemcached see the link below:
 
