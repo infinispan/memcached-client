@@ -24,15 +24,27 @@ package net.spy.memcached.protocol.ascii;
 
 import net.spy.memcached.ops.GetAndTouchOperation;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+
 /**
  * Implementation of the get and touch operation.
  */
 public class GetAndTouchOperationImpl extends BaseGetOpImpl implements
     GetAndTouchOperation {
 
-  public GetAndTouchOperationImpl(String c, int e,
-      GetAndTouchOperation.Callback cb, String k) {
-    super(c, e, cb, k);
+  private static final String CMD = "gat";
+  private final int exp;
+
+  public GetAndTouchOperationImpl(String k, int e, GetAndTouchOperation.Callback cb) {
+    this(Collections.singleton(k), e, cb);
+  }
+
+  public GetAndTouchOperationImpl(Collection<String> k, int e, GetAndTouchOperation.Callback cb) {
+    super(CMD, cb, new HashSet<>(k));
+    exp = e;
   }
 
   @Override
@@ -40,4 +52,8 @@ public class GetAndTouchOperationImpl extends BaseGetOpImpl implements
     return exp;
   }
 
+  @Override
+  protected byte[] extraBytesBefore() {
+    return (" " + exp).getBytes(StandardCharsets.US_ASCII);
+  }
 }
