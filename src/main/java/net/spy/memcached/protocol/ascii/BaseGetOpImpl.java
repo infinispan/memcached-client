@@ -50,11 +50,11 @@ public abstract class BaseGetOpImpl extends OperationImpl {
   private static final OperationStatus LOCK_ERROR = new OperationStatus(false,
       "LOCK_ERROR", StatusCode.ERR_TEMP_FAIL);
   private static final byte[] RN_BYTES = "\r\n".getBytes();
+  private static final byte[] EMPTY_BYTES = new byte[0];
   private final String cmd;
   private final Collection<String> keys;
   private String currentKey = null;
-  protected final int exp;
-  private final byte[] expBytes;
+
   private long casValue = 0;
   private int currentFlags = 0;
   private byte[] data = null;
@@ -66,18 +66,11 @@ public abstract class BaseGetOpImpl extends OperationImpl {
     super(cb);
     cmd = c;
     keys = k;
-    exp = 0;
-    expBytes = null;
     hasValue = false;
   }
 
-  public BaseGetOpImpl(String c, int e, OperationCallback cb, String k) {
-    super(cb);
-    cmd = c;
-    keys = Collections.singleton(k);
-    exp = e;
-    expBytes = String.valueOf(e).getBytes();
-    hasValue = false;
+  public BaseGetOpImpl(String c, OperationCallback cb, String k) {
+    this(c, cb, Collections.singleton(k));
   }
 
   /**
@@ -200,31 +193,28 @@ public abstract class BaseGetOpImpl extends OperationImpl {
       size += k.length;
       size++;
     }
-    size += afterKeyBytesSize();
+    byte[] before = extraBytesBefore();
+    byte[] after = extraBytesAfter();
+    size += before.length + after.length;
     ByteBuffer b = ByteBuffer.allocate(size);
     b.put(cmd.getBytes());
+    b.put(before);
     for (byte[] k : keyBytes) {
       b.put((byte) ' ');
       b.put(k);
     }
-    afterKeyBytes(b);
+    b.put(after);
     b.put(RN_BYTES);
     b.flip();
     setBuffer(b);
   }
 
-  protected int afterKeyBytesSize() {
-    if (expBytes == null) {
-      return 0;
-    }
-    return expBytes.length + 1;
+  protected byte[] extraBytesBefore() {
+    return EMPTY_BYTES;
   }
 
-  protected void afterKeyBytes(final ByteBuffer b) {
-    if (expBytes != null) {
-      b.put((byte) ' ');
-      b.put(expBytes);
-    }
+  protected byte[] extraBytesAfter() {
+    return EMPTY_BYTES;
   }
 
   @Override
@@ -234,7 +224,6 @@ public abstract class BaseGetOpImpl extends OperationImpl {
 
   @Override
   public String toString() {
-    return "Cmd: " + cmd + " Keys: " + StringUtils.join(keys, " ") + "Exp: "
-      + exp;
+    return "Cmd: " + cmd + " Keys: " + StringUtils.join(keys, " ");
   }
 }
