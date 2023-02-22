@@ -24,6 +24,8 @@ package net.spy.memcached.protocol.ascii;
 
 import net.spy.memcached.ops.GetlOperation;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * Implementation of the getl operation.
  */
@@ -34,12 +36,17 @@ class GetlOperationImpl extends BaseGetOpImpl implements GetlOperation {
   private final int exp;
 
   public GetlOperationImpl(String key, int exp, GetlOperation.Callback c) {
-    super(CMD, exp, c, key);
+    super(CMD, c, key);
     this.exp = exp;
   }
 
   @Override
   public int getExpiration() {
     return exp;
+  }
+
+  @Override
+  protected byte[] extraBytesAfter() {
+    return (" " + exp).getBytes(StandardCharsets.US_ASCII);
   }
 }
