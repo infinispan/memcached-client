@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.infinispan</groupId>
   <artifactId>memcached-client</artifactId>
-  <version>1.2.1-SNAPSHOT</version>
+  <version>1.2.0</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -75,6 +75,7 @@
   <scm>
     <connection>scm:git:git@github.com:infinispan/memcached-client.git</connection>
     <url>https://github.com/infinispan/memcached-client</url>
+    <tag>memcached-client-1.2.0</tag>
   </scm>
   <developers>
     <developer>
