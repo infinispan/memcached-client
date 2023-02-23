@@ -74,6 +74,7 @@
   <scm>
     <connection>scm:git:git@github.com:infinispan/memcached-client.git</connection>
     <url>https://github.com/infinispan/memcached-client</url>
+    <tag>memcached-client-1.2.0</tag>
   </scm>
   <developers>
     <developer>
