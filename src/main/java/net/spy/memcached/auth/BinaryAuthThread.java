@@ -23,6 +23,7 @@
 
 package net.spy.memcached.auth;
 
+import java.util.Arrays;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -113,9 +114,7 @@ public class BinaryAuthThread extends SpyThread {
       // process of auth'ing and the connection is
       // lost or dropped due to bad auth
       Thread.currentThread().interrupt();
-      if (listMechsOp != null) {
-        listMechsOp.cancel();
-      }
+      listMechsOp.cancel();
       done.set(true); // If we were interrupted, tear down.
     }
 
@@ -159,7 +158,7 @@ public class BinaryAuthThread extends SpyThread {
     }
     SaslClient saslClient;
     try {
-      saslClient = Sasl.createSaslClient(supportedMechs, null, "memcached", serverName, authDescriptor.getProperties(), authDescriptor.getCallback());
+      saslClient = SaslUtils.createSaslClient(supportedMechs, null, "memcached", serverName, authDescriptor.getProperties(), authDescriptor.getCallback(), authDescriptor.getProviders());
     } catch (SaslException e) {
       throw new RuntimeException("Error initializing SASL client", e);
     }
