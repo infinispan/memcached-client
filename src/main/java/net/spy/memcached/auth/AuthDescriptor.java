@@ -24,8 +24,9 @@
 package net.spy.memcached.auth;
 
 import javax.security.auth.callback.CallbackHandler;
+import java.security.Provider;
+import java.security.Security;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Information required to specify authentication mechanisms and callbacks.
@@ -36,6 +37,7 @@ public class AuthDescriptor {
   private final CallbackHandler cbh;
   private final Map<String, ?> props;
   private final String serverName;
+  private final Provider[] providers;
   private int authAttempts;
   private int allowedAuthAttempts;
 
@@ -60,12 +62,14 @@ public class AuthDescriptor {
    * @param m list of mechanisms
    * @param h the callback handler for grabbing credentials and stuff
    * @param s the server name. Can be null
+   * @param p a {@link Map} of implementation-specific
    */
-  public AuthDescriptor(String[] m, CallbackHandler h, String s, Map<String, ?> p) {
+  public AuthDescriptor(String[] m, CallbackHandler h, String s, Map<String, ?> p, Provider[] sp) {
     mechs = m;
     cbh = h;
     props = p;
     serverName = s;
+    providers = sp;
     authAttempts = 0;
     String authThreshhold =
         System.getProperty("net.spy.memcached.auth.AuthThreshold");
@@ -76,13 +80,17 @@ public class AuthDescriptor {
     }
   }
 
+  public AuthDescriptor(String[] m, CallbackHandler h, String s, Map<String, ?> p) {
+    this(m, h, s, p, Security.getProviders());
+  }
+
   /**
    *
    * @param m list of mechanisms
    * @param h the callback handler for grabbing credentials and stuff
    */
   public AuthDescriptor(String[] m, CallbackHandler h) {
-    this(m, h, null, null);
+    this(m, h, null, null, Security.getProviders());
   }
 
   /**
@@ -124,5 +132,9 @@ public class AuthDescriptor {
 
   public String getServerName() {
     return serverName;
+  }
+
+  public Provider[] getProviders() {
+    return providers;
   }
 }
