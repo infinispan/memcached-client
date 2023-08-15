@@ -38,6 +38,7 @@ In order to create a client in TLS mode, do the following to initialize the clie
             // Create the client in TLS mode
             connectionFactoryBuilder.setSSLContext(sslContext);
             // TLS mode enables hostname verification by default. It is always recommended to do that.
+            connectionFactoryBuilder.setHostnameForTlsVerification("my_website.com");
             // To disable hostname verification, do the following:
             // connectionFactoryBuilder.setSkipTlsHostnameVerification(true);
             MemcachedClient client = new MemcachedClient(connectionFactoryBuilder.build(), AddrUtil.getAddresses("my_website.com:11211"));
