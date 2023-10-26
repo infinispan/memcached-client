@@ -226,9 +226,9 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
   }
 
   public MemcachedClient(ConnectionFactory cf, List<InetSocketAddress> addrs) throws IOException{
-    this(cf, addrs, false);
+    this(cf, addrs, cf != null && cf.getClientMode() == ClientMode.Unset);
   }
-  
+
   /**
    * Get a memcache client over the specified memcached locations.
    *
@@ -255,12 +255,18 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
         String hostName = addrs.get(0).getHostName();
         //All config endpoints has ".cfg." subdomain in the DNS name.
         if(hostName != null && hostName.contains(".cfg.")){
-          cf = new DefaultConnectionFactory(ClientMode.Dynamic);
+          if (cf == null) {
+            cf = new DefaultConnectionFactory(ClientMode.Dynamic);
+          } else {
+            cf.setClientMode(ClientMode.Dynamic);
+          }
         }
       }
       //Fallback to static mode
-      if(cf == null){
+      if (cf == null) {
         cf = new DefaultConnectionFactory(ClientMode.Static);
+      } else {
+        cf.setClientMode(ClientMode.Static);
       }
     }
 
@@ -275,7 +281,6 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
     if(cf.getClientMode() == ClientMode.Dynamic && addrs.size() > 1){
       throw new IllegalArgumentException("Only one configuration endpoint is valid with dynamic client mode.");
     }
-    
     
     connFactory = cf;
     clientMode = cf.getClientMode();

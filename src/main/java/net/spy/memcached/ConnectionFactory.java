@@ -117,7 +117,12 @@ public interface ConnectionFactory {
    * @return the clientMode.
    */
   ClientMode getClientMode();
-  
+
+  /**
+   * Set the client mode in client.
+   */
+  void setClientMode(ClientMode clientMode);
+
   /**
    * The interval used for periodic polling of configuration. 
    * @return the interval in milliseconds

@@ -19,5 +19,9 @@ public enum ClientMode {
    * The client is initialized with a configuration endpoint. The client will periodically learn about the cache nodes in the
    * cluster.
    */
-  Dynamic
+  Dynamic,
+  /**
+   * Default client mode, we will perform mode discovery based on the endpoint dns name.
+   */
+  Unset
 }

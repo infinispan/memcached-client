@@ -73,7 +73,7 @@ public class DefaultConnectionFactory extends SpyObject implements
   /**
    * Default client mode.
    */
-  public static final ClientMode DEFAULT_CLIENT_MODE = ClientMode.Dynamic;
+  public static final ClientMode DEFAULT_CLIENT_MODE = ClientMode.Unset;
   
   /**
    * Default failure mode.
@@ -132,7 +132,7 @@ public class DefaultConnectionFactory extends SpyObject implements
    */
   public static final long DEFAULT_AUTH_WAIT_TIME = 1000;
 
-  private final ClientMode clientMode;
+  private ClientMode clientMode;
   protected final int opQueueLen;
   private final int readBufSize;
   private final HashAlgorithm hashAlg;
@@ -205,7 +205,12 @@ public class DefaultConnectionFactory extends SpyObject implements
   public ClientMode getClientMode(){
     return clientMode;
   }
-  
+
+  @Override
+  public void setClientMode(ClientMode clientMode) {
+    this.clientMode = clientMode;
+  }
+
   public long getDynamicModePollingInterval(){
     return ConfigurationPoller.DEFAULT_POLL_INTERVAL;
   }
