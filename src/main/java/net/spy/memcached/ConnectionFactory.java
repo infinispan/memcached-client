@@ -119,7 +119,7 @@ public interface ConnectionFactory {
   ClientMode getClientMode();
 
   /**
-   * Set the client mode in client.
+   * Set the client mode in client. Should only be used in the constructor when determine the client mode.
    */
   void setClientMode(ClientMode clientMode);
 
