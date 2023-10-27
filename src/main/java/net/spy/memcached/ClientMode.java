@@ -9,7 +9,10 @@ package net.spy.memcached;
  * The modes in which the client can operate. 
  */
 public enum ClientMode {
-
+  /**
+   * Default client mode, we will perform mode discovery based on the endpoint dns name.
+   */
+  Unset,
   /**
    * In Static Client mode, the set of endpoints specified during initialization is used throughout the lifetime of the client object.
    */
