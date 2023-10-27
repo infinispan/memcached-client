@@ -255,19 +255,11 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
         String hostName = addrs.get(0).getHostName();
         //All config endpoints has ".cfg." subdomain in the DNS name.
         if(hostName != null && hostName.contains(".cfg.")){
-          if (cf == null) {
-            cf = new DefaultConnectionFactory(ClientMode.Dynamic);
-          } else {
-            cf.setClientMode(ClientMode.Dynamic);
-          }
+          cf = updateClientMode(cf, ClientMode.Dynamic);
         }
       }
       //Fallback to static mode
-      if (cf == null) {
-        cf = new DefaultConnectionFactory(ClientMode.Static);
-      } else {
-        cf.setClientMode(ClientMode.Static);
-      }
+      cf = updateClientMode(cf, ClientMode.Static);
     }
 
     if (cf == null) {
@@ -302,7 +294,16 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
       addObserver(this);
     }
   }
-  
+
+  private ConnectionFactory updateClientMode(ConnectionFactory f, ClientMode mode) {
+    if (f == null) {
+      f = new DefaultConnectionFactory(mode);
+    } else {
+      f.setClientMode(mode);
+    }
+    return f;
+  }
+    
   /**
    * Establish a connection to the configuration endpoint and get the list of cache node endpoints. Then initialize the 
    * memcached client with the cache node endpoints list. 
