@@ -36,6 +36,7 @@ public final class UnitTestConfig {
   public static final String PORT_PROP = "server.port_number";
   public static final String TYPE_TEST_UNIT = "unit";
   public static final String TYPE_TEST_CI = "ci";
+  public static final String TEST_HOSTNAME = "abc.cfg.test.com";
 
   //currently server host address ipv4 is always default to "127.0.0.1", disabled in build.xml
   public static final String IPV4_ADDR = System.getProperty(IPV4_PROP,
