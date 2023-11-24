@@ -248,6 +248,7 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
     //An internal customer convenience check to determine whether the client mode based on 
     // the DNS name if only one endpoint is specified. 
     if(determineClientMode){
+      boolean isClientModeDetermined = false;
       if(addrs.size() == 1){
         if(addrs.get(0) == null){
           throw new NullPointerException("Socket address is null");
@@ -256,10 +257,14 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
         //All config endpoints has ".cfg." subdomain in the DNS name.
         if(hostName != null && hostName.contains(".cfg.")){
           cf = updateClientMode(cf, ClientMode.Dynamic);
+          isClientModeDetermined = true;
         }
       }
       //Fallback to static mode
-      cf = updateClientMode(cf, ClientMode.Static);
+      if (!isClientModeDetermined) {
+        cf = updateClientMode(cf, ClientMode.Static);
+        isClientModeDetermined = true;
+      }
     }
 
     if (cf == null) {
