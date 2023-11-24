@@ -286,15 +286,16 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
     opFact = cf.getOperationFactory();
     assert opFact != null : "Connection factory failed to make op factory";
 
+    operationTimeout = cf.getOperationTimeout();
+    authDescriptor = cf.getAuthDescriptor();
+    executorService = cf.getListenerExecutorService();
+
     if(clientMode == ClientMode.Dynamic){
       initializeClientUsingConfigEndPoint(cf, addrs.get(0));
     } else {
       setupConnection(cf, addrs);
     }
 
-    operationTimeout = cf.getOperationTimeout();
-    authDescriptor = cf.getAuthDescriptor();
-    executorService = cf.getListenerExecutorService();
     if (authDescriptor != null) {
       addObserver(this);
     }
