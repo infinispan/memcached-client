@@ -112,7 +112,7 @@ public final class KetamaNodeLocator extends SpyObject implements NodeLocator {
    *          continuum
    * @param alg The hash algorithm to use when choosing a node in the Ketama
    *          consistent hash continuum
-   * @param weights node weights for ketama, a map from InetSocketAddress to
+   * @param nodeWeights node weights for ketama, a map from InetSocketAddress to
    *          weight as Integer
    * @param configuration node locator configuration
    */

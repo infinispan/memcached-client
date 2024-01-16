@@ -37,7 +37,7 @@ import net.spy.memcached.transcoders.Transcoder;
  * MemcachedClient client=[...];
  *
  * // Get a Transcoder.
- * Transcoder<Long> tc = new LongTranscoder();
+ * Transcoder%lt;Long%gt; tc = new LongTranscoder();
  *
  * // Get a mutator instance that uses that client.
  * CASMutator&lt;Long&gt; mutator=new CASMutator&lt;Long&gt;(client, tc);

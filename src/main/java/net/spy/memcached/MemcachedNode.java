@@ -140,7 +140,7 @@ public interface MemcachedNode {
   /**
    * Do handshake for connecting to this node when TLS enabled.
    * 
-   * @retrurn true if handshake is successful, false if handshake is unsuccessful.
+   * @return true if handshake is successful, false if handshake is unsuccessful.
    */
   boolean doTlsHandshake(long timeoutInMillis) throws IOException;
 

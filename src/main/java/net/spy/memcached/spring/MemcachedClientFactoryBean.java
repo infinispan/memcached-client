@@ -59,7 +59,6 @@ import org.springframework.beans.factory.InitializingBean;
  *   <property name="locatorType" value="${pajamas.client.locatorType}"/>
  * }
  * </pre>
- * </p>
  *
  * @author Eran Harel
  */

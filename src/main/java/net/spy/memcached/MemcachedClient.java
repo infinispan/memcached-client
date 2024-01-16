@@ -1926,9 +1926,9 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
 
   /**
    * Get the config using the config protocol.
-   * The command format is "config get <type>"
+   * The command format is "config get &lt;type&gt;"
    * @param addr - The node from which to retrieve the configuration
-   * @param config to get
+   * @param type config to get
    * @param tc the transcoder to serialize and unserialize value
    * @return the result from the server (null if there is none)
    * @throws OperationTimeoutException if the global operation timeout is
@@ -1960,7 +1960,7 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
    * Get the given configurationType asynchronously.
    *
    * @param addr - The node from which to retrieve the configuration
-   * @param configurationType the configurationType to fetch
+   * @param type the configurationType to fetch
    * @param tc the transcoder to serialize and unserialize value
    * @return a future that will hold the return value of the fetch
    * @throws IllegalStateException in the rare circumstance where queue is too
@@ -1996,7 +1996,7 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
    * Sets the configuration in the cache node for the specified configurationType.
    *
    * @param addr - The node where the configuration is set.
-   * @param type the type under which this configuration should be added.
+   * @param configurationType the type under which this configuration should be added.
    * @param o the configuration to store
    * @return a future representing the processing of this operation
    * @throws IllegalStateException in the rare circumstance where queue is too
@@ -2010,7 +2010,7 @@ public class MemcachedClient extends SpyObject implements MemcachedClientIF,
    * Sets the configuration in the cache node for the specified configurationType.
    *
    * @param addr - The node where the configuration is set.
-   * @param type the type under which this configuration should be added.
+   * @param configurationType the type under which this configuration should be added.
    * @param o the configuration to store
    * @param tc the transcoder to serialize and unserialize the configuration
    * @return a future representing the processing of this operation

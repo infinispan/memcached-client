@@ -44,8 +44,8 @@ import net.spy.memcached.ops.StatusCode;
  * <p>From an OperationFuture, application code can determine if the status of a
  * given Operation in an asynchronous manner.
  *
- * <p>If for example we needed to update the keys "user:<userid>:name",
- * "user:<userid>:friendlist" because later in the method we were going to
+ * <p>If for example we needed to update the keys "user:&lt;userid&gt;:name",
+ * "user:&lt;userid&gt;:friendlist" because later in the method we were going to
  * verify the change occurred as expected interacting with the user, we can
  * fire multiple IO operations simultaneously with this concept.
  *
